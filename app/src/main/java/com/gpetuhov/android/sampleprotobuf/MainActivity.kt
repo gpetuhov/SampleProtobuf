@@ -57,17 +57,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun readPerson() {
         try {
+            // Deserialize person from file
             val input = FileInputStream(getPersonFile())
             val person = PersonProtoClass.Person.parseFrom(input)
 
+            // Update UI
             personName.setText(person.name)
             personAge.setText(person.age.toString())
             personEmail.setText(person.email)
 
         } catch (e: Exception) {
+            // We get here in case of error or if the file not exists
             toast("Error reading person from file")
         }
     }
 
+    // Open file in the application directory
     private fun getPersonFile() = File("${filesDir.path}/person.txt")
 }
