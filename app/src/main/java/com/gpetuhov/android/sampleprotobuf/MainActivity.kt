@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         savePerson.setOnClickListener { savePerson() }
+        readPerson.setOnClickListener { readPerson() }
+        clearInput.setOnClickListener { clearEditTexts() }
     }
 
     private fun savePerson() {
@@ -31,9 +34,7 @@ class MainActivity : AppCompatActivity() {
 
             try {
                 // Serialize person and write to file
-                val path = filesDir.path
-                val file = File("$path/person.txt")
-                val output = FileOutputStream(file)
+                val output = FileOutputStream(getPersonFile())
                 person.writeTo(output)
 
                 clearEditTexts()
@@ -53,4 +54,20 @@ class MainActivity : AppCompatActivity() {
         personAge.setText("")
         personEmail.setText("")
     }
+
+    private fun readPerson() {
+        try {
+            val input = FileInputStream(getPersonFile())
+            val person = PersonProtoClass.Person.parseFrom(input)
+
+            personName.setText(person.name)
+            personAge.setText(person.age.toString())
+            personEmail.setText(person.email)
+
+        } catch (e: Exception) {
+            toast("Error reading person from file")
+        }
+    }
+
+    private fun getPersonFile() = File("${filesDir.path}/person.txt")
 }
