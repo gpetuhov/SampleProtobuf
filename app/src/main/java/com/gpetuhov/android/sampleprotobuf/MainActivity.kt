@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                 val output = FileOutputStream(file)
                 person.writeTo(output)
 
+                clearEditTexts()
                 toast("Person saved to file")
 
             } catch (e: Exception) {
@@ -45,5 +46,11 @@ class MainActivity : AppCompatActivity() {
         } else {
             toast("Name and email must not be empty")
         }
+    }
+
+    private fun clearEditTexts() {
+        personName.setText("")
+        personAge.setText("")
+        personEmail.setText("")
     }
 }
