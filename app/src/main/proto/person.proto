@@ -1,4 +1,13 @@
 syntax = "proto3";
+package tutorial;
+
+// All classes in this file will be generated inside one outer class
+
+// Package of the outer classes
+option java_package = "com.gpetuhov.android.sampleprotobuf";
+
+// Name of the outer class
+option java_outer_classname = "PersonProtoClass";
 
 message Person {
     string name = 1;

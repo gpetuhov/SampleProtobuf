@@ -18,3 +18,5 @@ https://developers.google.com/protocol-buffers/
 https://github.com/google/protobuf-gradle-plugin
 
 https://medium.com/@elye.project/simple-android-protobuf-tutorial-with-actual-code-bfb581299f47
+
+https://proandroiddev.com/how-to-setup-your-android-app-to-use-protobuf-96132340de5c
