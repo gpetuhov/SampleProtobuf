@@ -21,22 +21,27 @@ class MainActivity : AppCompatActivity() {
         val age = personAge.text.toString().toIntOrNull() ?: 0
         val email = personEmail.text.toString()
 
-        val person = PersonProtoClass.Person.newBuilder()
-            .setName(name)
-            .setAge(age)
-            .setEmail(email)
-            .build()
+        if (name != "" && email != "") {
+            val person = PersonProtoClass.Person.newBuilder()
+                .setName(name)
+                .setAge(age)
+                .setEmail(email)
+                .build()
 
-        try {
-            val path = filesDir.path
-            val file = File("$path/person.txt")
-            val output = FileOutputStream(file)
-            person.writeTo(output)
+            try {
+                val path = filesDir.path
+                val file = File("$path/person.txt")
+                val output = FileOutputStream(file)
+                person.writeTo(output)
 
-            toast("Person saved to file")
+                toast("Person saved to file")
 
-        } catch (e: Exception) {
-            toast("Error saving person to file")
+            } catch (e: Exception) {
+                toast("Error saving person to file")
+            }
+
+        } else {
+            toast("Name and email must not be empty")
         }
     }
 }
