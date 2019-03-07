@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+// Protobuf
+apply plugin: 'com.google.protobuf'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -32,4 +35,35 @@ dependencies {
 
     // KAndroid
     implementation 'com.pawegio.kandroid:kandroid:0.8.8@aar'
+
+    // Protobuf
+    // You need to depend on the lite runtime library, not protobuf-java
+    implementation 'com.google.protobuf:protobuf-lite:3.0.1'
+}
+
+// This is needed to generate Java classes from .proto files.
+// Currently (March 2019) protobuf does not support generating Kotlin classes.
+protobuf {
+    protoc {
+        // You still need protoc like in the non-Android case
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    plugins {
+        javalite {
+            // The codegen for lite comes as a separate artifact
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                // In most cases you don't need the full Java output
+                // if you use the lite output.
+                remove java
+            }
+            task.plugins {
+                javalite { }
+            }
+        }
+    }
 }
