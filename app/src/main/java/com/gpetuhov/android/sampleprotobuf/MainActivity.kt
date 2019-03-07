@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         val email = personEmail.text.toString()
 
         if (name != "" && email != "") {
+            // Create Person by using builder
             val person = PersonProtoClass.Person.newBuilder()
                 .setName(name)
                 .setAge(age)
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
                 .build()
 
             try {
+                // Serialize person and write to file
                 val path = filesDir.path
                 val file = File("$path/person.txt")
                 val output = FileOutputStream(file)
